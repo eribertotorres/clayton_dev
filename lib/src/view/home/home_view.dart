@@ -96,6 +96,19 @@ final class _HomeViewState extends State<HomeView> {
               ),
             ),
             const SizedBox(height: 16),
+
+            if (viewModel.allVisibleTodosCompleted)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.check_circle_outline),
+                    SizedBox(width: 8),
+                    Text('Todas as tarefas exibidas estão concluídas!'),
+                  ],
+                ),
+              ),
             Expanded(child: _buildContent(viewModel)),
           ],
         ),

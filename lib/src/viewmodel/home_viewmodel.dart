@@ -37,6 +37,16 @@ final class HomeViewModel extends ChangeNotifier {
     }).toList();
   }
 
+  bool get allVisibleTodosCompleted {
+    final todos = filteredTodos;
+
+    if (todos.isEmpty) {
+      return false;
+    }
+
+    return todos.every((todo) => todo.completed);
+  }
+
   Future<void> loadTodos() async {
     _isLoading = true;
     _errorMessage = null;
