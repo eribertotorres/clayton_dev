@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/preferences/preferences_datasource.dart';
-import '../home/home_view.dart';
-import '../login/login_view.dart';
+import '../../shared/routes/app_routes.dart';
 
 final class SplashView extends StatefulWidget {
   final PreferencesDatasource preferences;
@@ -25,11 +24,8 @@ final class _SplashViewState extends State<SplashView> {
 
     if (!mounted) return;
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => isLogged ? const HomeView() : const LoginView(),
-      ),
-    );
+    Navigator.of(context)
+        .pushReplacementNamed(isLogged ? AppRoutes.home : AppRoutes.login);
   }
 
   @override
