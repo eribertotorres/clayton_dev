@@ -15,6 +15,10 @@ import 'src/data/todo/todo_remote_datasource.dart';
 import 'src/data/todo/todo_repository.dart';
 import 'src/viewmodel/home_viewmodel.dart';
 
+import 'src/shared/routes/app_routes.dart';
+import 'src/view/home/home_view.dart';
+import 'src/view/login/login_view.dart';
+
 void main() {
   final preferences = PreferencesDatasource();
 
@@ -78,7 +82,12 @@ final class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        home: SplashView(preferences: preferences),
+        initialRoute: AppRoutes.splash,
+        routes: {
+          AppRoutes.splash: (_) => SplashView(preferences: preferences),
+          AppRoutes.login: (_) => const LoginView(),
+          AppRoutes.home: (_) => const HomeView(),
+        },
       ),
     );
   }

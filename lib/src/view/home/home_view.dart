@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/preferences/preferences_datasource.dart';
 import '../../viewmodel/home_viewmodel.dart';
+import '../../shared/routes/app_routes.dart';
 
 final class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,6 +14,16 @@ final class HomeView extends StatefulWidget {
 
 final class _HomeViewState extends State<HomeView> {
   String _userName = '';
+  Future<void> _logout() async {
+    final preferences = PreferencesDatasource();
+
+    await preferences.logout();
+
+    if (!mounted) return;
+
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+  }
 
   @override
   void initState() {
@@ -43,6 +54,13 @@ final class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_userName.isEmpty ? 'TODOs' : 'Olá, $_userName'),
+        actions: [
+          IconButton(
+            onPressed: _logout,
+            tooltip: 'Sair',
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

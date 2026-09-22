@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodel/login_viewmodel.dart';
+import '../../shared/routes/app_routes.dart';
 
 final class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -45,6 +46,8 @@ final class _LoginViewState extends State<LoginView> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Bem-vindo, ${user?.fullName ?? ''}!')),
       );
+
+      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
