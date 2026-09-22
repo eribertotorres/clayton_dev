@@ -25,17 +25,21 @@ final class TodoRepositoryImpl implements ITodoRepository {
   @override
   Future<Result<List<TodoModel>>> getTodos() async {
     try {
-      final response = await remoteDatasource.getTodos();
+      var localTodos = await localDatasource.getTodos();
 
-      final todosJson = response['todos'] as List;
+      if (localTodos.isEmpty) {
+        final response = await remoteDatasource.getTodos();
 
-      final remoteTodos = todosJson
-          .map((todo) => TodoModel.fromMap(Map<String, dynamic>.from(todo)))
-          .toList();
+        final todosJson = response['todos'] as List;
 
-      await localDatasource.saveTodos(remoteTodos);
+        final remoteTodos = todosJson
+            .map((todo) => TodoModel.fromMap(Map<String, dynamic>.from(todo)))
+            .toList();
 
-      final localTodos = await localDatasource.getTodos();
+        await localDatasource.saveTodos(remoteTodos);
+
+        localTodos = await localDatasource.getTodos();
+      }
 
       final todos = localTodos.map((todo) => TodoModel.fromMap(todo)).toList();
 
